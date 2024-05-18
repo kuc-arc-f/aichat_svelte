@@ -22,20 +22,12 @@ routes.forEach((item, idx) => {
 //  routeArray['key_' + idx] = 'value_' + idx;
   routeArray[item.path] = compo;
 });
-console.log(routeArray);
-//<Router {routeTmp} />
-//<Head />
+//console.log(routeArray);
 </script>
 
 <!-- -->
 <main>
-    <nav>
-    {#each routes as item}
-    <div>
-      <a href={`/#${item.path}`}>{item.name}</a>
-    </div>
-    {/each}	
-    </nav>
+    <Head />
     <hr />
     <Router routes={routeArray} />
     <hr />
@@ -44,8 +36,11 @@ console.log(routeArray);
 <style>
 </style>
 <!--
-      <p>Title1</p>
-
-  {item.path}
-<h1>Vite + Svelte</h1>
+  <nav>
+  {#each routes as item}
+  <div>
+    <a href={`/#${item.path}`}>{item.name}</a>
+  </div>
+  {/each}	
+  </nav>
 -->

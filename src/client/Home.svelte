@@ -1,7 +1,10 @@
 <script lang="ts">
 //console.log("#home");
+import { marked } from 'marked';
 import CrudIndex from './Home/CrudIndex';
+import LoadBox from '../components/LoadBox.svelte'
 export let answer: string = "";
+let initDisplay = false;
 /**
 *
 * @param
@@ -10,12 +13,19 @@ export let answer: string = "";
 */
 async function sendText(){
   try {
+    initDisplay = true;
     answer = "";
     const result = await CrudIndex.addItem();
 console.log(result);
-    if(result) { answer = result }        
+    initDisplay = false;
+    if(result) { 
+      const s = marked.parse(result);      
+console.log(s); 
+      answer = s 
+    } 
   } catch (error) {
-      console.error(error);
+    initDisplay = false;
+    console.error(error);
   }    
 }
 /**
@@ -39,6 +49,9 @@ async function clearText(){
 
 <!-- -->
 <main>
+  {#if initDisplay}
+    <LoadBox />
+  {/if}
   <div class="container mx-auto my-2 px-8 bg-white">
     <h1 class="text-4xl font-bold">AI-Chat!</h1>
     <hr class="my-2">
@@ -61,8 +74,12 @@ async function clearText(){
       </div>
     </div>
     <hr class="my-2">
-    result :<br />
-    {answer}
+    answer :<br />
+    {#if answer}
+    <div class="bg-sky-100 p-2 rounded">
+      {@html answer}
+    </div>
+    {/if}
   </div>
 </main>
 
