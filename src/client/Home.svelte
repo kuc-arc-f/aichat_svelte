@@ -69,7 +69,7 @@ async function clearText(){
   {#if initDisplay}
     <LoadBox />
   {/if}
-  <div class="container mx-auto my-2 px-8 bg-white">
+  <div class="home_main_wrap container mx-auto my-2 px-8 bg-white">
     <h1 class="text-4xl font-bold">AI-Chat!</h1>
     <hr class="my-2">
     <div class="flex flex-row">
@@ -95,8 +95,8 @@ async function clearText(){
     </div>
     <hr class="my-2">
     answer :<br />
-    {#if answer}
-    <div class="bg-sky-100 p-2 rounded">
+    {#if answer} 
+    <div class="bg-sky-100 p-2 rounded answer_box_wrap">
       {@html answer}
     </div>
     {/if}

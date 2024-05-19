@@ -16,3 +16,10 @@ a {
 
 /*footer */
 .main_body_wrap{ min-height: 600px; }
+
+/* MD */
+.home_main_wrap .answer_box_wrap pre {
+  background-color: #EEE;
+  padding: 0.5rem;
+}
+
