@@ -2,9 +2,14 @@
 //console.log("#home");
 import { marked } from 'marked';
 import CrudIndex from './Home/CrudIndex';
+import Crud from './Home/Crud';
+import Validate from './Home/Validate';
 import LoadBox from '../components/LoadBox.svelte'
+import ErrorDialogBox from '../components/ErrorDialogBox.svelte'
+//
 export let answer: string = "";
 let initDisplay = false;
+let errors = {};
 /**
 *
 * @param
@@ -15,8 +20,20 @@ async function sendText(){
   try {
     initDisplay = true;
     answer = "";
+    const input = Crud.getInputValues();
+    errors = Validate.formValidate(input);
+console.log(errors);
+    if (Object.keys(errors).length > 0) {
+      initDisplay = false;
+      const dlg = document.getElementById('errorModalDialog');
+      if(dlg) {
+        //@ts-ignore
+        dlg.showModal();
+      }
+      return;
+    }
     const result = await CrudIndex.addItem();
-console.log(result);
+    //console.log(result);
     initDisplay = false;
     if(result) { 
       const s = marked.parse(result);      
@@ -60,6 +77,9 @@ async function clearText(){
         <textarea
          class="border border-gray-400 rounded-md px-3 py-2 w-full resize-none focus:outline-none focus:border-blue-500"
          name="input_text" id="input_text" rows="3" />
+         {#if errors?.input_text}
+           <em class="error_message">{errors?.input_text}</em>
+         {/if}
       </div>
       <div class="text-center pt-1">
         <button 
@@ -81,6 +101,8 @@ async function clearText(){
     </div>
     {/if}
   </div>
+  <!-- dialog -->
+  <ErrorDialogBox message={`NG! Check Input text`} />
 </main>
 
 <style>
